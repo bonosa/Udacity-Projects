@@ -1,14 +1,14 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 //TODO: Include the ball_chaser "DriveToTarget" header file
-#include "driveToTarget.h"
+#include "ball_chaser/DriveToTarget.h"
 // ROS::Publisher motor commands;
 ros::Publisher motor_command_publisher;
 
 // TODO: Create a handle_drive_request callback function that executes whenever a drive_bot service is requested
 // This function should publish the requested linear x and angular velocities to the robot wheel joints
 // After publishing the requested velocities, a message feedback should be returned with the requested wheel velocities
-bool handle_drive_request(ball_chaser::DriveToTarget::Request& req, ball_chaser::drive_bot::Response& res)
+bool handle_drive_request(ball_chaser::DriveToTarget::Request& req, ball_chaser::DriveToTarget::Response& res)
 {
  // TODO: Delete the loop, move the code to the inside of the callback function and make the necessary changes to publish the requested velocities instead of constant values
     
@@ -19,8 +19,8 @@ bool handle_drive_request(ball_chaser::DriveToTarget::Request& req, ball_chaser:
         motor_command.angular.z = req.angular_z;
         // Publish angles to drive the robot
         motor_command_publisher.publish(motor_command);
-        res.msg_feeback = "Linear velocity x set to: " + std::to_string(cmd_vel.linear.x) + ROS_INFO_STREAM(res.msg_feedback);
-        res.msg_feeback = "Angular velocity z set to: " + std::to_string(cmd_vel.angular.z) + ROS_INFO_STREAM(res.msg_feedback);
+        res.msg_feedback = "Linear velocity x set to: " + std::to_string(motor_command.linear.x) + ROS_INFO_STREAM(res.msg_feedback);
+        res.msg_feedback = "Angular velocity z set to: " + std::to_string(motor_command.angular.z) + ROS_INFO_STREAM(res.msg_feedback);
         return true;
 
  
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     // TODO: Define a drive /ball_chaser/command_robot service with a handle_drive_request callback function
 
-    ros::ServiceServer service = n.advertiseService(`/ball_chaser/command_robot`, handle_drive_request);
+    ros::ServiceServer service = n.advertiseService("/ball_chaser/command_robot", handle_drive_request);
 
 
     // TODO: Handle ROS communication events

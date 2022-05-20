@@ -49,7 +49,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-  DriveToTarget.msg
+  DriveToTarget1.msg
    
  )
 
@@ -200,9 +200,9 @@ include_directories(
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 
-add_executable(ball_chaser src/drive_bot.cpp)
-target_link_libraries(ball_chaser ${catkin_LIBRARIES})
-add_dependencies(ball_chaser ball_chaser_generate_messages_cpp)
+add_executable(drive_bot src/drive_bot.cpp)
+target_link_libraries(drive_bot ${catkin_LIBRARIES})
+add_dependencies(drive_bot ball_chaser_generate_messages_cpp)
 
 # endif()
 
