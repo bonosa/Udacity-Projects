@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
+#include <string.h>
 //TODO: Include the ball_chaser "DriveToTarget" header file
 #include "ball_chaser/DriveToTarget.h"
 // ROS::Publisher motor commands;
@@ -10,20 +11,32 @@ ros::Publisher motor_command_publisher;
 // After publishing the requested velocities, a message feedback should be returned with the requested wheel velocities
 bool handle_drive_request(ball_chaser::DriveToTarget::Request& req, ball_chaser::DriveToTarget::Response& res)
 {
- // TODO: Delete the loop, move the code to the inside of the callback function and make the necessary changes to publish the requested velocities instead of constant values
-    
-        // Create a motor_command object of type geometry_msgs::Twist
-        geometry_msgs::Twist motor_command;
-        // Set wheel velocities, forward [x,y]
-        motor_command.linear.x = req.linear_x;
-        motor_command.angular.z = req.angular_z;
-        // Publish angles to drive the robot
-        motor_command_publisher.publish(motor_command);
-        res.msg_feedback = "Linear velocity x set to: " + std::to_string(motor_command.linear.x) + ROS_INFO_STREAM(res.msg_feedback);
-        res.msg_feedback = "Angular velocity z set to: " + std::to_string(motor_command.angular.z) + ROS_INFO_STREAM(res.msg_feedback);
-        return true;
 
- 
+
+// Create a motor_command object of type geometry_msgs::Twist
+
+geometry_msgs::Twist motor_command;
+
+// Set wheel velocities, forward [x,y]
+
+motor_command.linear.x = req.linear_x;
+
+motor_command.angular.z = req.angular_z;
+
+// Publish angles to drive the robot
+
+motor_command_publisher.publish(motor_command);
+
+res.msg_feedback=  "Linear velocity x set to: " + std::to_string(motor_command.linear.x); 
+
+ROS_INFO_STREAM(res.msg_feedback);
+ res.msg_feedback ="Angular velocity z set to: " + std::to_string(motor_command.angular.z);
+
+ROS_INFO_STREAM(res.msg_feedback);
+
+
+return true;
+
 }
 int main(int argc, char** argv)
 {
