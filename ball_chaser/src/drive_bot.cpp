@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 
 
     // TODO: Handle ROS communication events
-    //ros::spin();
+    ros::spin();
 
     return 0;
 }
