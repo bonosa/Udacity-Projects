@@ -75,7 +75,7 @@ else if (i>img.width/3 && i<2*img.width/3) //Center
 {
 
 ball_position=0.5;
-ball_velocity=9.9;
+ball_velocity=0.0;
 break;
 
 }
