@@ -98,6 +98,7 @@ else
 
 ball_position=0.0;
 ball_velocity=0.0;
+break;
 
 }
 
