@@ -35,6 +35,8 @@ ROS_ERROR("Failed to call service /ball_chaser/command_robot");
 void process_image_callback(const sensor_msgs::Image img)
 
 {
+double ball_position;
+double ball_velocity;
 
 int white_pixel = 255;
 
@@ -60,7 +62,9 @@ if (i<img.width/3) //Left
 
 {
 
-drive_bot(0.0,0.5);
+//drive_bot(0.0,0.5);
+ball_position=0.0;
+ball_velocity=0.5;
 
 break;
 
@@ -70,8 +74,8 @@ else if (i>img.width/3 && i<2*img.width/3) //Center
 
 {
 
-drive_bot(0.5,0.0);
-
+ball_position=0.5;
+ball_velocity=9.9;
 break;
 
 }
@@ -80,8 +84,8 @@ else if (i>2*img.width/3 && i<img.width) //Right
 
 {
 
-drive_bot(0.0,-0.5);
-
+ball_position=0.0;
+ball_velocity=-0.5;
 break;
 
 }
@@ -92,12 +96,13 @@ else
 
 {
 
-drive_bot(0.0,0.0);
+ball_position=0.0;
+ball_velocity=0.0;
 
 }
 
 }
-
+drive_bot(ball_position, ball_velocity);
 }
 
 int main(int argc, char** argv)
