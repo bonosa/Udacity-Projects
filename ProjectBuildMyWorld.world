@@ -4846,7 +4846,7 @@
             </mesh>
           </geometry>
         </visual>
-        <sensor name='camera1' type='camera'>
+        <sensor name='camera' type='camera'>
           <update_rate>30</update_rate>
           <camera name='head'>
             <horizontal_fov>1.39626</horizontal_fov>
