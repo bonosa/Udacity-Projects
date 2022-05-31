@@ -1,4 +1,4 @@
-#include "ros/ros.h"
+						#include "ros/ros.h"
 
 #include "ball_chaser/DriveToTarget.h"
 
@@ -10,7 +10,7 @@ ros::ServiceClient client;
 
 // This function calls the command_robot service to drive the robot in the specified direction
 
-void drive_bot(float lin_x, float ang_z)
+void drive_robot(float lin_x, float ang_z)
  
 {
 
@@ -30,6 +30,8 @@ ROS_ERROR("Failed to call service /ball_chaser/command_robot");
 
 }
 
+
+
 // This callback function continuously executes and reads the image data
 
 void process_image_callback(const sensor_msgs::Image img)
@@ -37,7 +39,7 @@ void process_image_callback(const sensor_msgs::Image img)
 {
 double ball_position;
 double ball_velocity;
-
+int loop_count = 0;
 int white_pixel = 255;
 
 // TODO: Loop through each pixel in the image and check if there's a bright white one
@@ -56,12 +58,13 @@ if (img.data[i] == white_pixel && img.data[i+1] == white_pixel && img.data[i+2] 
 
 {
 
-ROS_WARN("white_pixel");
+
+ loop_count++;
 
 if (i<img.width/3) //Left
 
 {
-
+ROS_WARN("L");
 //drive_bot(0.0,0.5);
 ball_position=0.0;
 ball_velocity=0.5;
@@ -73,38 +76,44 @@ break;
 else if (i>img.width/3 && i<2*img.width/3) //Center
 
 {
-
+ROS_WARN("CE");
 ball_position=0.5;
 ball_velocity=0.0;
-break;
 
+break;
 }
 
 else if (i>2*img.width/3 && i<img.width) //Right
 
 {
-
+ROS_WARN("R");
 ball_position=0.0;
 ball_velocity=-0.5;
+
 break;
-
 }
 
-}
 
+}
 else
 
 {
 
 ball_position=0.0;
 ball_velocity=0.0;
-break;
+
+
+
+}
+}
+ROS_WARN("number of imes loop executed %d %d", loop_count, img.height*img.width*3);
+drive_robot(ball_position, ball_velocity);
+
 
 }
 
-}
-drive_bot(ball_position, ball_velocity);
-}
+
+
 
 int main(int argc, char** argv)
 
